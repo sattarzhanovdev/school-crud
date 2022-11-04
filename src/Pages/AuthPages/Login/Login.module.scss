@@ -1,0 +1,117 @@
+.login{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  @media screen and (max-width: 768px){
+    justify-content: center;
+  }
+  .banner{
+    width: 70%;
+    height: 100vh;
+    background: url('https://www.gannett-cdn.com/presto/2019/07/09/USAT/95f3e51a-46d4-467c-9698-b8485e0a62c1-GettyImages-1005285232.jpg?crop=2120,1193,x1,y0&width=1600&height=800&format=pjpg&auto=webp') center / cover;
+    @media screen and (max-width: 768px){
+      display: none;
+    }
+  }
+  .login__block{
+    width: 30%;
+    @media screen and (max-width: 768px){
+      width: 100%;
+
+    }
+    height: 100vh;
+    background: #4D44B5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    h3{
+      color: white;
+    }
+    form{
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      margin-bottom: 25px;
+      div{
+        position: relative;
+        input{
+          width: 300px;
+          height: 50px;
+          padding-left: 15px;
+          color: #2E2532;
+          background: #fbfbfb;
+          outline: none;
+          border: 0;
+          border-radius: 50px;
+          margin-bottom: 25px;
+          @media screen and (max-width: 1024px) {
+            width: 250px;
+          }
+        }
+        span{
+          position: absolute;
+          top: 25%;
+          right: 15px;
+          cursor: pointer;
+        }
+        button{
+          width: 320px;
+          @media screen and (max-width: 1024px) {
+            width: 270px;
+          }
+          height: 50px;
+          border: 0;
+          border-radius: 50px;
+          background-color: #FCC43E;
+          color: #303972;
+          cursor: pointer;
+        }
+      }
+      p{
+        color: white;
+        font-size: 14px;
+      }
+    }
+    .line{
+      height: 2px;
+      width: 320px;
+      @media screen and (max-width: 1024px) {
+        width: 270px;
+      }
+      background: gray;
+      margin-bottom: 25px;
+    }
+    .login__google{
+      button{
+        width: 320px;
+        height: 50px;
+        background-color: #FCC43E;
+        color: #303972;
+        border: 0;
+        border-radius: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        span{
+          margin-right: 10px;
+        }
+        @media screen and (max-width: 1024px) {
+          width: 270px;
+        }
+      }
+    }
+    .have__account{
+      p{
+        @media screen and (max-width: 1024px) {
+          font-size: 14px;
+        }
+        color: white;
+        a{
+          color: #FCC43E;
+        }
+      }
+    }
+  }
+}
