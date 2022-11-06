@@ -38,7 +38,7 @@ const Sidebar = ({active, setActive}) => {
             <BiLogOut />
           </button> :
           <img 
-          src={users ? users.photo : 'https://cdn-icons-png.flaticon.com/512/194/194936.png'} 
+          src={users?.photo ? users.photo : 'https://cdn-icons-png.flaticon.com/512/194/194936.png'} 
             alt="user"
             onClick={() => flipImage()}
           />
