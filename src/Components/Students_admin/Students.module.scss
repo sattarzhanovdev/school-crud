@@ -130,7 +130,7 @@
         letter-spacing: 0.055rem;
         text-align: center;
       }
-      
+
       table thead tr {
         color: whitesmoke;
         background-color: var(--accent-color);
@@ -153,7 +153,7 @@
           background: #A098AE;
         }
       }
-      
+
       table th {
         letter-spacing: 0.075rem;
       }
@@ -165,9 +165,27 @@
         text-align: left;
       }
       
-      table th:nth-child(4),
-      table td:nth-child(4) {
+      table th:nth-child(5),
+      table td:nth-child(5) {
         text-align: right;
+        
+      }
+
+      table td:nth-child(5) {
+        text-align: right;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        span{
+          font-size: 20px;
+          margin-left: 15px;
+          &:nth-child(1){
+            color: red;
+          }
+          &:nth-child(2){
+            color: #ffb916;
+          }
+        }
       }
       
       @media screen and (max-width: 768px) {
@@ -195,8 +213,9 @@
           margin-bottom: 2rem;
           display: block;
           cursor: pointer;
+          
         }
-        
+
         table td {
           font-size: 0.875rem;
           text-align: right;

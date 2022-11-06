@@ -2,26 +2,24 @@ import React from 'react'
 import cls from './Students.module.scss'
 import { TiArrowSortedDown } from 'react-icons/ti'
 import { drop_list } from '../Utils'
-import { FaPlus, FaSearch } from 'react-icons/fa'
-import { GetStudents } from '../../Helpers'
-import AddNewStudent from '../AddNewStudent'
-import ModalWindow from '../ModalWindow'
+import { FaSearch } from 'react-icons/fa'
+import {GetStudents } from '../../Helpers'
+import { API } from '../../API'
+import { useNavigate } from 'react-router-dom'
 import { MdOutlineArrowLeft, MdOutlineArrowRight } from 'react-icons/md'
+import AddNewStudent from '../AddNewStudent'
 
 const StudentsAdmin = () => {
+  const [ val, setVal ] = React.useState('all')
   const [ search, setSearch ] = React.useState('')
-  const [ val, setVal ] = React.useState('All')
   const [ active, setActive ] = React.useState(false)
-  const [ activeModal, setActiveModal ] = React.useState(false)
-  const [ activeAdd, setActiveAdd ] = React.useState(false)
 
   const { students, PAGE_SIZE, TOTAL_PAGE, page, setPage } = GetStudents()
 
-
-  const filtered = students?.filter(item => {
+  const base = students?.filter(item => {
     return item.firstName.toLowerCase().includes(search.toLowerCase()) || item.lastName.toLowerCase().includes(search.toLowerCase())
   })
-  
+ 
   function sorting(value){
     if (value === 'name'){
       students?.sort((a, b) => {
@@ -62,6 +60,19 @@ const StudentsAdmin = () => {
         }
       })
     }
+  }
+
+
+  const navigate = useNavigate()
+
+  function getMore(itemID){
+    API.getStudentsInfo(itemID)
+      .then(res => {
+        localStorage.setItem('studentsId', itemID)
+        console.log(res.data);
+      })
+
+    navigate(`/more/${itemID}`)
   }
 
   const nextPage = () => setPage(prev => prev + 1)
@@ -113,10 +124,9 @@ const StudentsAdmin = () => {
                 }
               </div>
             </div>
-            <button 
-              onClick={() => setActiveAdd(!activeAdd)}
+            <button
             >
-              <span><FaPlus /></span> Add new student
+              Add new student
             </button>
           </div>
         </div>
@@ -134,27 +144,14 @@ const StudentsAdmin = () => {
               </thead>
               <tbody>
                 {
-                  filtered ? filtered.map(({id, img, firstName, lastName, age, group, grade}, i) => (
+                  base ? 
+                  base.slice(
+                    (page - 1) * PAGE_SIZE,
+                    (page - 1) * PAGE_SIZE + PAGE_SIZE
+                  ).map(({id, firstName, lastName, age, group, grade}, i) => (
                     <tr 
+                      onClick={() => getMore(id)}
                       key={i}
-                      onClick={() => {
-                        setActiveModal(!activeModal)
-                        localStorage.setItem('id', id)
-                      }}
-                    >
-                      <td data-label="Name">{lastName} {firstName}</td>
-                      <td data-label="ID">{id}</td>
-                      <td data-label="Age">{age}</td>
-                      <td data-label="Class">{grade} {group}</td>
-                    </tr>
-                  )) : 
-                  students.map(({id, firstName, lastName, age, group, grade}, i) => (
-                    <tr 
-                      key={i}
-                      onClick={() => {
-                        setActiveModal(!activeModal)
-                        localStorage.setItem('id', id)
-                      }}
                     >
                       <td data-label="Name">{lastName} {firstName}</td>
                       <td data-label="ID">{id}</td>
@@ -162,6 +159,8 @@ const StudentsAdmin = () => {
                       <td data-label="Class">{grade} {group}</td>
                     </tr>
                   ))
+                  :
+                  null
                 }
               </tbody>
             </table>
@@ -194,7 +193,7 @@ const StudentsAdmin = () => {
                   key={i}
                 >
                   <button
-                    className={page == i + 1 ? cls.active : ''}
+                    className={page === i + 1 ? cls.active : ''}
                     onClick={() => setPage(i + 1)}
                   >
                     {i+1}
@@ -214,14 +213,10 @@ const StudentsAdmin = () => {
           :
           null
         }
-        <ModalWindow active={activeModal} setActive={setActiveModal}/>
-        {
-          activeAdd ?
-          <AddNewStudent />
-          :
-          null
-        }
+
       </div>
+
+      <AddNewStudent />
     </div>
   )
 }

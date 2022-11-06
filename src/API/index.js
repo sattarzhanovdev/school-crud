@@ -1,19 +1,9 @@
 import axios from "axios"
 
 export const API = {
-  getStudents: () => {
-    return axios.get('/students.json')
-  },
-  getStudentsInfo: (id) => {
-    return axios.get(`/students/${id}.json`)
-  },
-  postStudents: (data) => {
-    return axios.post('/students.json', data)
-  },
-  deleteStudent: (id) => {
-    return axios.delete(`/students/${id}.json`)
-  },
-  editStudent: (id) => {
-    return axios.put(`/students/${id}.json`)
-  }
+  getStudents: (uid) => axios.get(`/${uid}.json`),
+  getStudentsInfo: (uid, id) => axios.get(`/${id}.json`),
+  postStudents: (data) => axios.post(`${uid}.json`, data),
+  deleteStudent: (id) => axios.delete(`/students/${id}.json`),
+  editStudent: (id) => axios.put(`/students/${id}.json`)
 }
