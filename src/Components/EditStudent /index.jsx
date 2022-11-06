@@ -1,11 +1,11 @@
 import React from 'react';
-import cls from './AddNewStudent.module.scss'
+import cls from './EditStudent.module.scss'
 import { AiOutlineClose } from 'react-icons/ai'
 import { useForm } from 'react-hook-form';
 import { API } from '../../API';
 
-const AddNewStudent = ({active, setActive}) => {
- 
+const EditStudent = ({id, active, setActive}) => {
+  const [ base, setBase ] = React.useState(null)
   const uid = localStorage.getItem('uid')
 
   const {
@@ -14,8 +14,23 @@ const AddNewStudent = ({active, setActive}) => {
     handleSubmit
   } = useForm()
 
+  React.useEffect(() => {
+    API.getStudentsInfo(uid, id)
+      .then(res => {
+        const result = Object.entries(res.data)
+          .map(([id, item]) => {
+            return {
+              item
+            } 
+          })
+        setBase(result[0].item)
+      })
+  }, [])
+
+  console.log(base && base);
+
   const handleAdd = (data) => {
-    API.postStudents(uid , data)
+    API.editStudent(uid, id, data)
     reset()
   }
   return (
@@ -32,7 +47,7 @@ const AddNewStudent = ({active, setActive}) => {
           <p>Image</p> 
           <input 
             type="url" 
-            placeholder='Image URL' 
+            placeholder={base?.image}
             {...register('image')}
           />
         </div>
@@ -40,7 +55,7 @@ const AddNewStudent = ({active, setActive}) => {
           <p>First name</p> 
           <input 
             type="text" 
-            placeholder='First name' 
+            placeholder={base?.firstName}
             {...register('firstName')}
           />
         </div>
@@ -48,7 +63,7 @@ const AddNewStudent = ({active, setActive}) => {
           <p>Last name</p> 
           <input 
             type="text" 
-            placeholder='Last name' 
+            placeholder={base?.lastName}
             {...register('lastName')}
           />
         </div>
@@ -56,7 +71,7 @@ const AddNewStudent = ({active, setActive}) => {
           <p>Age</p> 
           <input 
             type="text" 
-            placeholder='Age' 
+            placeholder={base?.age}
             {...register('age')}
           />
         </div>
@@ -64,7 +79,7 @@ const AddNewStudent = ({active, setActive}) => {
           <p>Group</p> 
           <input 
             type="text" 
-            placeholder='Group' 
+            placeholder={base?.group}
             {...register('group')}
           />
         </div>
@@ -72,13 +87,13 @@ const AddNewStudent = ({active, setActive}) => {
           <p>Class</p> 
           <input 
             type="text" 
-            placeholder='Class' 
+            placeholder={base?.grade}
             {...register('grade')}
           />
         </div>
         <div>
-          <button>
-            Add
+          <button type='submit'>
+            Edit
           </button>
         </div>
       </form>
@@ -86,4 +101,4 @@ const AddNewStudent = ({active, setActive}) => {
   )
 }
 
-export default AddNewStudent
+export default EditStudent

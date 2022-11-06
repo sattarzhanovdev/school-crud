@@ -18,21 +18,23 @@ export const handleLoginWithGoogle = () => signInWithPopup(auth, provider)
 export const handleLoginWithEmail = async (useremail, userpassword) => {
   try {
     await signInWithEmailAndPassword(auth, useremail, userpassword)
-  }catch (e){
+  }catch{
     
   }
 }
 
 
-export const handleRegistWithEmail = async (useremail, userpassword, name) => {
+export const handleRegistWithEmail = async (email, password, name) => {
   try {
-    const res = await createUserWithEmailAndPassword(auth, useremail, userpassword)
+    const res = await createUserWithEmailAndPassword(auth, email, password)
     updateProfile(res.user, {
       displayName: name,
     })
-  } catch (e){
-    return e
+  } catch {
   }
 }
 
-export const handleSignOut = () => signOut(auth)
+export const handleSignOut = () => {
+  signOut(auth)
+  window.location.reload()
+}

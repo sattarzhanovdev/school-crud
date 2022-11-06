@@ -16,7 +16,6 @@ const Login = () => {
 
   const handleLogin = (data) => {
     handleLoginWithEmail(data.email, data.password)
-
     reset()
   }
 
@@ -28,10 +27,7 @@ const Login = () => {
       <div className={cls.login__block}>
         <h3>Login</h3>
         <div className={cls.login__email}>
-          <form  onSubmit={handleSubmit((data) => {
-            handleLogin(data)
-            reset()
-          })}>
+          <form onSubmit={handleSubmit((data) => handleLogin(data))}>
             <div>
               <input 
                 type="email" 
@@ -56,12 +52,7 @@ const Login = () => {
               </span>
             </div>
             <div>
-              <button
-                onClick={e => {
-                  e.preventDefault()
-                  handleLogin()
-                }}
-              >
+              <button type='submit'>
                 Login
               </button>
             </div>

@@ -64,8 +64,10 @@ const Students = () => {
 
   const navigate = useNavigate()
 
+  const uid = localStorage.getItem('uid')
+
   function getMore(itemID){
-    API.getStudentsInfo(itemID)
+    API.getStudentsInfo(uid, itemID)
       .then(res => {
         localStorage.setItem('studentsId', itemID)
         console.log(res.data);

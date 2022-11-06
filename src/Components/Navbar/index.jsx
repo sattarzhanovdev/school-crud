@@ -1,11 +1,15 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { AiOutlineClose } from 'react-icons/ai'
+import { FaBars } from 'react-icons/fa'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../Providers/useAuth'
 import AccountSide from '../AccountSIde'
+import Sidebar from '../Sidebar'
 import cls from './Navbar.module.scss'
 
 const NavBar = () => {
   const [ sideActive, setSideActive ] = React.useState(false)
+  const [ active, setActive ] = React.useState(false)
 
   const navigate = useNavigate()
 
@@ -14,10 +18,13 @@ const NavBar = () => {
   return (
     <div className={cls.container}>
       <div className={cls.navbar}>
-        <div className={cls.title}>
-          <h2>
-            School CRUD
-          </h2>
+        <div className={cls.logo}>
+          <Link to={'/'}>
+            <img 
+              src="/img/logo.png" 
+              alt="logo"
+            />
+          </Link>
         </div>
         <div className={cls.admin__btn}>
           <button
@@ -36,7 +43,17 @@ const NavBar = () => {
             sideActive ? <AccountSide /> : null
           }
         </div>
+        <div className={cls.bars}>
+          <li
+            onClick={() => {
+              setActive(!active)
+            }}
+          >
+            { sideActive ? <AiOutlineClose /> : <FaBars /> }
+          </li>
+        </div>
       </div>
+      <Sidebar active={active} setActive={setActive} />
     </div>
   )
 }

@@ -1,16 +1,26 @@
 import React from 'react'
 import cls from './Register.module.scss'
 import { AiFillEye, AiFillEyeInvisible, AiOutlineGoogle } from 'react-icons/ai'
-import { handleLoginWithEmail, handleLoginWithGoogle, handleRegistWithEmail } from '../../../Firebase'
+import { handleLoginWithGoogle, handleRegistWithEmail } from '../../../Firebase'
 import { Link } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
 
 const Register = () => {
   const [ inputType, setInputType ] = React.useState('password')
-  const [ name, setName ] = React.useState('')
-  const [ email, setEmail ] = React.useState('')
-  const [ password, setPassword ] = React.useState('')
 
   const error = localStorage.getItem('error')
+
+  const {
+    reset,
+    register,
+    handleSubmit,
+  } = useForm()
+
+  const handleRegister = (data) => {
+    handleRegistWithEmail(data.email, data.password, data.name)
+    console.log(data);
+    reset()
+  }
 
   return (
     <div className={cls.login}>
@@ -20,29 +30,27 @@ const Register = () => {
       <div className={cls.login__block}>
         <h3>Register</h3>
         <div className={cls.login__email}>
-          <form>
+          <form onSubmit={handleSubmit(data => handleRegister(data))}>
             <div>
               <input 
-                type="email" 
+                type="name" 
                 placeholder='Enter your name' 
-                value={name}
-                onChange={e => setName(e.target.value)}
+                {...register('name')}
+                
               />
             </div>
             <div>
               <input 
                 type="email" 
                 placeholder='Enter your email' 
-                value={email}
-                onChange={e => setEmail(e.target.value)}
+                {...register('email')}
               />
             </div>
             <div>
               <input 
                 type={inputType}
                 placeholder="Enter your password" 
-                value={password}
-                onChange={e => setPassword(e.target.value)}
+                {...register('password')}
               />
               <span
                 onClick={() => setInputType(inputType === 'password' ? 'text' : 'password')}
@@ -55,14 +63,7 @@ const Register = () => {
               </span>
             </div>
             <div>
-              <button
-                onClick={e => {
-                  e.preventDefault()
-                  handleRegistWithEmail(email, password, name)
-                  setEmail('')
-                  setPassword('')
-                }}
-              >
+              <button type='submit'>
                 Register
               </button>
             </div>

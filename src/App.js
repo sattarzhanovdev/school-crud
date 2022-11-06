@@ -29,7 +29,12 @@ const App = () => {
     //   group: 'A',
     //   grade: '11'
     // })
-    users ? navigate('/') : navigate('/auth/login')
+    if(users){
+      navigate('/')
+      localStorage.setItem('uid', users.id)
+    }else{
+      navigate('/auth/login')
+    }
   }, [users])
   
 

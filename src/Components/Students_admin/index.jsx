@@ -7,14 +7,21 @@ import {GetStudents } from '../../Helpers'
 import { API } from '../../API'
 import { useNavigate } from 'react-router-dom'
 import { MdOutlineArrowLeft, MdOutlineArrowRight } from 'react-icons/md'
+import { BiTrash, BiEdit } from 'react-icons/bi'
 import AddNewStudent from '../AddNewStudent'
+import EditStudent from '../EditStudent '
 
 const StudentsAdmin = () => {
   const [ val, setVal ] = React.useState('all')
   const [ search, setSearch ] = React.useState('')
   const [ active, setActive ] = React.useState(false)
+  const [ activeAdd, setActiveAdd ] = React.useState(false)
+  const [ ID, setID ] = React.useState('')
+  const [ activeEdit, setActiveEdit ] = React.useState(false)
 
   const { students, PAGE_SIZE, TOTAL_PAGE, page, setPage } = GetStudents()
+
+  const uid = localStorage.getItem('uid')
 
   const base = students?.filter(item => {
     return item.firstName.toLowerCase().includes(search.toLowerCase()) || item.lastName.toLowerCase().includes(search.toLowerCase())
@@ -61,19 +68,14 @@ const StudentsAdmin = () => {
       })
     }
   }
+  
+  const deleteStudent = (id) => {
+    API.deleteStudent(uid, id)
+    GetStudents()
+  }
 
 
   const navigate = useNavigate()
-
-  function getMore(itemID){
-    API.getStudentsInfo(itemID)
-      .then(res => {
-        localStorage.setItem('studentsId', itemID)
-        console.log(res.data);
-      })
-
-    navigate(`/more/${itemID}`)
-  }
 
   const nextPage = () => setPage(prev => prev + 1)
   const prevPage = () => setPage(prev => prev - 1)
@@ -125,6 +127,7 @@ const StudentsAdmin = () => {
               </div>
             </div>
             <button
+              onClick={() => setActiveAdd(true)}
             >
               Add new student
             </button>
@@ -140,6 +143,7 @@ const StudentsAdmin = () => {
                   <th>ID</th>
                   <th>Age</th>
                   <th>Class</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -149,14 +153,28 @@ const StudentsAdmin = () => {
                     (page - 1) * PAGE_SIZE,
                     (page - 1) * PAGE_SIZE + PAGE_SIZE
                   ).map(({id, firstName, lastName, age, group, grade}, i) => (
-                    <tr 
-                      onClick={() => getMore(id)}
-                      key={i}
-                    >
+                    <tr key={i}>
                       <td data-label="Name">{lastName} {firstName}</td>
-                      <td data-label="ID">{id}</td>
+                      <td data-label="ID" >{id}</td>
                       <td data-label="Age">{age}</td>
                       <td data-label="Class">{grade} {group}</td>
+                        <td data-label="Actions">
+                          <span
+                            onClick={() => {
+                              deleteStudent(id)
+                            }}
+                          >
+                            <BiTrash />
+                          </span>
+                          <span
+                            onClick={() => {
+                              setActiveEdit(true)
+                              setID(id)
+                            }}
+                          >
+                            <BiEdit />
+                          </span>
+                        </td>
                     </tr>
                   ))
                   :
@@ -189,9 +207,7 @@ const StudentsAdmin = () => {
             </li>
             {
               Array.from({length: TOTAL_PAGE}).map((item, i) => (
-                <li
-                  key={i}
-                >
+                <li key={i}>
                   <button
                     className={page === i + 1 ? cls.active : ''}
                     onClick={() => setPage(i + 1)}
@@ -216,7 +232,8 @@ const StudentsAdmin = () => {
 
       </div>
 
-      <AddNewStudent />
+      <AddNewStudent active={activeAdd} setActive={setActiveAdd} />
+      <EditStudent id={ID} active={activeEdit} setActive={setActiveEdit} />
     </div>
   )
 }

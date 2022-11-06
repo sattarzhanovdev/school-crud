@@ -9,10 +9,12 @@ const MoreAboutStudent = () => {
 
   const { id } = useParams()
 
+  const uid = localStorage.getItem('uid')
+
   const navigate = useNavigate()
 
   React.useEffect(() => {
-    API.getStudentsInfo(id)
+    API.getStudentsInfo(uid, id)
       .then(res => {
         setBase(res.data)
       })

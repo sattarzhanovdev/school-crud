@@ -1,19 +1,27 @@
 .container{
   display: flex;
   justify-content: center;
+  margin-bottom: 50px;
+  @media screen and (min-width: 768px){
+    padding: 0 5%;
+  }
   .students{
     @media screen and (min-width: 1440px){
       max-width: 1440px;
     }
-    @media screen and (min-width: 768px){
-      width: 100%;
-    }
-    margin-top: 100px;
+    width: 100%;
+    margin-top: 100px;  
     position: relative;
     .up{
       display: flex;
       justify-content: space-between;
       align-items: center;
+      @media screen and (max-width: 425px){
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 15px;
+      }
       .left{
         display: flex;
         flex-direction: column;
@@ -68,6 +76,9 @@
             border-radius: 15px;
             position: absolute;
             right: 200px;
+            @media screen and (max-width: 425px) {
+              left: 0;
+            }
             li{
               margin-bottom: 15px;
               list-style: none;
@@ -111,9 +122,10 @@
         --bgColorDarker: #ececec;
         --bgColorLighter: #fcfcfc;
         --insideBorderColor: lightgray;
-        @media screen and (min-width: 768px){
+        @media screen and (max-width: 425px){
           width: 90%;
         }
+        width: 100%;
         margin: 50px 0;
         padding: 0;
         border: 1px solid var(--accent-color);
@@ -130,7 +142,7 @@
         letter-spacing: 0.055rem;
         text-align: center;
       }
-
+      
       table thead tr {
         color: whitesmoke;
         background-color: var(--accent-color);
@@ -153,7 +165,7 @@
           background: #A098AE;
         }
       }
-
+      
       table th {
         letter-spacing: 0.075rem;
       }
@@ -164,31 +176,26 @@
         font-weight: normal;
         text-align: left;
       }
-      
+
       table th:nth-child(5),
       table td:nth-child(5) {
         text-align: right;
-        
       }
 
       table td:nth-child(5) {
-        text-align: right;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
         span{
-          font-size: 20px;
+          font-size: 20px;          
           margin-left: 15px;
           &:nth-child(1){
             color: red;
           }
           &:nth-child(2){
-            color: #ffb916;
+            color: #FCC43E;
           }
         }
       }
       
-      @media screen and (max-width: 768px) {
+      @media screen and (max-width: 1024px) {
         table {
           border: none;
         }
@@ -213,9 +220,8 @@
           margin-bottom: 2rem;
           display: block;
           cursor: pointer;
-          
         }
-
+        
         table td {
           font-size: 0.875rem;
           text-align: right;
@@ -240,6 +246,12 @@
       .none{
         img{
           width: 500px;
+          @media screen and (max-width: 425px) {
+            width: 400px;
+          }
+          @media screen and (max-width: 375px) {
+            width: 300px;
+          }
         }
         h1{
           text-align: center;
