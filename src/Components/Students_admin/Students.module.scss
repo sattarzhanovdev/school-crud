@@ -118,6 +118,10 @@
       body {
         margin: 1rem;
       }
+
+      .none{
+        z-index: -1;
+      }
       
       table {
         --accent-color: #4D44B5;
@@ -135,7 +139,6 @@
         border-collapse: collapse;
         color: var(--text-color);
         table-layout: fixed;
-        z-index: -1;
       }
       
       table caption {

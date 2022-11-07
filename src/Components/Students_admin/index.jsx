@@ -5,7 +5,6 @@ import { drop_list } from '../Utils'
 import { FaSearch } from 'react-icons/fa'
 import {GetStudents } from '../../Helpers'
 import { API } from '../../API'
-import { useNavigate } from 'react-router-dom'
 import { MdOutlineArrowLeft, MdOutlineArrowRight } from 'react-icons/md'
 import { BiTrash, BiEdit } from 'react-icons/bi'
 import AddNewStudent from '../AddNewStudent'
@@ -75,8 +74,6 @@ const StudentsAdmin = () => {
   }
 
 
-  const navigate = useNavigate()
-
   const nextPage = () => setPage(prev => prev + 1)
   const prevPage = () => setPage(prev => prev - 1)
   
@@ -136,7 +133,7 @@ const StudentsAdmin = () => {
         <div className={cls.down}>
           {
             students ? 
-            <table>
+            <table className={active ? cls.none : ''}>
               <thead>
                 <tr>
                   <th>Name</th>
