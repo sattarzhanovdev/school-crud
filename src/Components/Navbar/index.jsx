@@ -49,7 +49,7 @@ const NavBar = () => {
               setActive(!active)
             }}
           >
-            { sideActive ? <AiOutlineClose /> : <FaBars /> }
+            <FaBars />
           </li>
         </div>
       </div>

@@ -75,9 +75,12 @@
             background: #4D44B5;
             border-radius: 15px;
             position: absolute;
-            right: 200px;
+            z-index: 100;
             @media screen and (max-width: 425px) {
               left: 0;
+            }
+            @media screen and (min-width: 768px) {
+              right: 0px;
             }
             li{
               margin-bottom: 15px;

@@ -96,6 +96,9 @@
           }
         }
         button{
+          @media screen and (max-width: 320px) {
+            width: 150px;
+          }
           width: 200px;
           height: 50px;
           background: none;
@@ -132,6 +135,7 @@
         border-collapse: collapse;
         color: var(--text-color);
         table-layout: fixed;
+        z-index: -1;
       }
       
       table caption {
